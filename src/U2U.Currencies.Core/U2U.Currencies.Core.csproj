@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <nullable>enable</nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>10.0</LangVersion>
+  </PropertyGroup> 
+  <ItemGroup>
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="U2U.Currencies.Core.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="U2U.EntityFrameworkCore.Abstractions" Version="0.8.0" />
+    <PackageReference Include="U2U.ValueObjectComparers" Version="2.2.1" />
+  </ItemGroup>
+</Project>

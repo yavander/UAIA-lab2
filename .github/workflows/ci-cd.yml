@@ -57,9 +57,12 @@ jobs:
       - name : Login to Azure
         uses: azure/login@v2
         with:
-          cred: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Create Resource Group
         uses: Azure/cli@v2
         with:
           inlinescript:
             az group create --name ${{ env.AZURE_RG }} -location ${{ env.AZURE-LOCATION }}
+  WebApp-Job:
+    runs-on: ubuntu-latest
+    

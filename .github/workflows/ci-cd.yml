@@ -63,6 +63,4 @@ jobs:
         with:
           inlinescript:
             az group create --name ${{ env.AZURE_RG }} -location ${{ env.AZURE-LOCATION }}
-  WebApp-Job:
-    runs-on: ubuntu-latest
     

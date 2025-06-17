@@ -62,5 +62,5 @@ jobs:
         uses: Azure/cli@v2
         with:
           inlinescript:
-            az group create --name ${{ env.AZURE_RG }} -location ${{ env.AZURE-LOCATION }}
+            az group create --name ${{ env.AZURE_RG }} -location ${{ env.AZURE_LOCATION }}
     

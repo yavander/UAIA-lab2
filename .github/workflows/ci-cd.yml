@@ -35,7 +35,7 @@ jobs:
     - name: Build
       run : dotnet build --no-restore --configuration ${{ env.configuration }}
     - name: Test
-      run : dotnet test -no-build --verbosity normal --configuration ${{ env.configuration }}
+      run : dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }}
     - name: Publish
       run : dotnet publish --configuration ${{ env.configuration }} --output ${{ runner.temp }}/publish
     - name : Upload the Publish Artifact

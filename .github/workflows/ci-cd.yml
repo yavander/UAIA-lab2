@@ -1,0 +1,40 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: CI-CD
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      -README.md
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  AZURE_RG: RG3
+  AZURE_SUBSCRIPTION: 88ef7d25-64c4-4899-9c55-8f38054889e5
+  AZURE_LOCATION: WestEurope
+
+jobs:
+  build-job:
+    runs-on: ubuntu-latest
+    env:
+      configuration: release
+    steps:
+    - name: Checkout Sources
+      uses : actions/checkout@v4
+    - name: Setup .NET
+      uses : actions/setup-dotnet@v2.0.0
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run : dotnet build --no-restore --configuration ${{ env.configuration }}
+    - name: Test
+      run : dotnet test -no-build --verbosity normal --configuration ${{ env.configuration }}
+    - name: Publish
+      run : dotnet publish --configuration ${{ env.configuration }} --output ${{runner.temp }}/publish

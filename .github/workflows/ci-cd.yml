@@ -16,7 +16,7 @@ env:
   AZURE_RG: RG1-Yanis-Vanderveken
   AZURE_SUBSCRIPTION: 634112c4-1cba-4632-b33e-c6adcf22439e
   AZURE-LOCATION: swedencentral
-  AZURE-WEBAPP-NAME: YV-u2u-mywebapp-dev
+  AZURE-WEBAPP-NAME: web-Yanis-Vanderveken
 
 jobs:
   Build-Job:

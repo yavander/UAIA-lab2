@@ -16,6 +16,7 @@ env:
   AZURE_RG: RG1-Yanis-Vanderveken
   AZURE_SUBSCRIPTION: 634112c4-1cba-4632-b33e-c6adcf22439e
   AZURE-LOCATION: swedencentral
+  AZURE-WEBAPP-NAME: YV-u2u-mywebapp-dev
 
 jobs:
   Build-Job:
@@ -62,3 +63,41 @@ jobs:
         with:
           inlineScript:
             az group create --name ${{env.AZURE_RG}} --location ${{env.AZURE-LOCATION}}
+      - name: az cli logout
+        run: az logout
+  Dev-Job:
+    runs-on: ubuntu-latest
+    environment: development
+    needs: [RG-Jobs]
+    steps:
+      - name: Download Templates
+        uses: actions/donwload-artifact@v3
+        with:
+          name: templates_artifact
+          path: ${{runner.temp}}/templates
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+      - name: Deploy BICEP Template
+        uses: azure/arm-deploy@v1
+        id: deploywebappd
+        with:
+          deploymentName: create-webapp
+          subscriptionId: ${{ env.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ env.AZURE_RG }}
+          template: ${{ runner.temp }}/templates/webapp.bicep
+          parameters: location=${{ ENV.AZURE-LOCATION }} appName=${{env.AZURE-WEBAPP-NAME}}
+      - name: Download Publish
+        uses: actions/download-artifact@v3
+        with: 
+          name: publish_artifact
+          path: ${{runner.temp}}/publish
+      - name: Azure WebApp
+        uses: Azure/webapps-deploy@v2
+        with:
+          app-name: ${{ steps.deploywebappd.outputs.webappname }}
+          # app-name: ${{ env.AZURE-WEBAPP-NAME }}
+          package: ${{ runner.temp }}/publish
+      - name: az cli logout
+        run: az logout

@@ -38,7 +38,7 @@ jobs:
     - name: Publish
       run: dotnet publish --configuration ${{env.configuration}} --output ${{runner.temp}}/publish
     - name: Upload the Publish artifact
-      uses: actions/upload-artifact@3.0.0
+      uses: actions/upload-artifact@v4
       with:
         name: publish_artifact
         path: ${{runner.temp}}/publish
